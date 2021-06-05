@@ -7,29 +7,28 @@ import org.springframework.stereotype.Service;
 
 import io.github.lucciani.cs.domain.exception.EntidadeEmUsoException;
 import io.github.lucciani.cs.domain.exception.EntidadeNaoEncontradaException;
-import io.github.lucciani.cs.domain.model.Categoria;
-import io.github.lucciani.cs.domain.repository.CategoriaRepository;
+import io.github.lucciani.cs.domain.model.Prioridade;
+import io.github.lucciani.cs.domain.repository.PrioridadeRepository;
 
 @Service
-public class CadastroCategoriaService {
+public class CadastroPrioridadeService {
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private PrioridadeRepository prioridadeRepository;
 
-	public Categoria salvar(Categoria categoria) {
-		return categoriaRepository.save(categoria);
+	public Prioridade salvar(Prioridade prioridade) {
+		return prioridadeRepository.save(prioridade);
 	}
 
-	public void remover(Long categoriaId) {
+	public void remover(Long prioridadeId) {
 		try {
-			categoriaRepository.deleteById(categoriaId);
-
+			prioridadeRepository.deleteById(prioridadeId);
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntidadeNaoEncontradaException(
-					String.format("Não existe um cadastro de categoria com o código %d", categoriaId));
+					String.format("Não existe um cadastro de prioridade com o código %d", prioridadeId));
 		} catch (DataIntegrityViolationException e) {
 			throw new EntidadeEmUsoException(
-					String.format("Categoria de código %d não pode ser removido, pois está em uso.", categoriaId));
+					String.format("Prioridade de código %d não pode ser removido, pois está em uso.", prioridadeId));
 		}
 	}
 
