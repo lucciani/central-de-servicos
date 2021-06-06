@@ -49,6 +49,16 @@ public class TicketController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@GetMapping(value = "/por-status")
+	public List<Ticket> buscarPorStatus(String descricao){
+		return ticketRepository.findByStatusDescricao(descricao);
+	}
+	
+	@GetMapping(value = "/por-categoria")
+	public List<Ticket> buscarPorCategoria(String descricao){
+		return ticketRepository.findByCategoriaNome(descricao);
+	}
+	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Ticket adicionar(@RequestBody Ticket ticket) {
