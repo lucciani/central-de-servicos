@@ -1,5 +1,8 @@
 package io.github.lucciani.cs.infrastructure.repository;
 
+import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.porDescricao;
+import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.porTitulo;
+import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.ticketsDoDia;
 import static io.github.lucciani.cs.infrastructure.util.UtilitarioData.getDataFormatada;
 
 import java.time.LocalDateTime;
@@ -15,18 +18,27 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import io.github.lucciani.cs.domain.model.Ticket;
+import io.github.lucciani.cs.domain.repository.TicketRepository;
+import io.github.lucciani.cs.domain.repository.TicketRepositoryQueries;
 import io.github.lucciani.cs.infrastructure.util.UtilitarioData;
 
 @Repository
-public class TicketRepositoryImpl {
+public class TicketRepositoryImpl implements TicketRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Lazy
+	@Autowired
+	private TicketRepository ticketRepository;
 
+	@Override
 	public List<Ticket> find(String texto) {
 
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
@@ -56,6 +68,12 @@ public class TicketRepositoryImpl {
 		TypedQuery<Ticket> query = manager.createQuery(criteria);
 
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Ticket> buscaTicketsDoDiaPorPalavraChave(String texto) {
+		return ticketRepository
+				.findAll(porTitulo(texto).or(porDescricao(texto)).and(ticketsDoDia()));
 	}
 
 }

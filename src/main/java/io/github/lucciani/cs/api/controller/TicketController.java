@@ -64,6 +64,11 @@ public class TicketController {
 		return ticketRepository.find(texto);
 	}
 	
+	@GetMapping(value = "/buscando-tickets")
+	public List<Ticket> buscaTicketDoDiaPorPalavraChave(String texto){
+		return ticketRepository.buscaTicketsDoDiaPorPalavraChave(texto);
+	}
+	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public Ticket adicionar(@RequestBody Ticket ticket) {
