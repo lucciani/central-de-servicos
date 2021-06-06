@@ -3,7 +3,7 @@ package io.github.lucciani.cs.infrastructure.repository;
 import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.porDescricao;
 import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.porTitulo;
 import static io.github.lucciani.cs.infrastructure.repository.specification.TicketSpecifications.ticketsDoDia;
-import static io.github.lucciani.cs.infrastructure.util.UtilitarioData.getDataFormatada;
+import static io.github.lucciani.cs.infrastructure.util.UtilitarioData.getInicioDia;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -26,7 +26,6 @@ import org.springframework.util.StringUtils;
 import io.github.lucciani.cs.domain.model.Ticket;
 import io.github.lucciani.cs.domain.repository.TicketRepository;
 import io.github.lucciani.cs.domain.repository.TicketRepositoryQueries;
-import io.github.lucciani.cs.infrastructure.util.UtilitarioData;
 
 @Repository
 public class TicketRepositoryImpl implements TicketRepositoryQueries {
@@ -59,9 +58,8 @@ public class TicketRepositoryImpl implements TicketRepositoryQueries {
 
 		
 		predicates.add(
-				builder.greaterThanOrEqualTo(root.get("dataAbertura"), 
-						getDataFormatada(UtilitarioData
-								.getInicioDia(LocalDateTime.now(ZoneId.systemDefault())))));
+				builder.greaterThanOrEqualTo(root.get("dataAbertura"), 				
+								getInicioDia(LocalDateTime.now(ZoneId.systemDefault()))));
 
 		criteria.where(predicates.toArray(new Predicate[0]));
 

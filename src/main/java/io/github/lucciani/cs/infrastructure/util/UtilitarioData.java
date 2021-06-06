@@ -13,7 +13,7 @@ public class UtilitarioData {
 	}
 
 	public static LocalDateTime getInicioDia(LocalDateTime data) {
-		return data.toLocalDate().atStartOfDay();
+		return getDataFormatada(data).toLocalDate().atStartOfDay();
 	}
 
 }
