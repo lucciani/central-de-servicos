@@ -60,13 +60,18 @@ public class TicketController {
 	}
 	
 	@GetMapping(value = "/busca-tickets")
-	public List<Ticket> buscarTicketDoDiaPorPalavraChave(String texto){
+	public List<Ticket> buscarTicketsDoDiaPorPalavraChave(String texto){
 		return ticketRepository.find(texto);
 	}
 	
 	@GetMapping(value = "/buscando-tickets")
-	public List<Ticket> buscaTicketDoDiaPorPalavraChave(String texto){
+	public List<Ticket> buscaTicketsDoDiaPorPalavraChave(String texto){
 		return ticketRepository.buscaTicketsDoDiaPorPalavraChave(texto);
+	}
+	
+	@GetMapping(value = "/busca-primeiro")
+	public Optional<Ticket> buscaPrimeiroTicket(){
+		return ticketRepository.buscarPrimeiro();
 	}
 	
 	@PostMapping

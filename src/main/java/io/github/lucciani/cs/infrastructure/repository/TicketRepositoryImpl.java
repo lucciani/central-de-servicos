@@ -56,10 +56,11 @@ public class TicketRepositoryImpl implements TicketRepositoryQueries {
 			predicates.add(disjunction);
 		}
 
+		Predicate dataAberturaPredicate = builder
+				.greaterThanOrEqualTo(root.get("dataAbertura"), 				
+				getInicioDia(LocalDateTime.now(ZoneId.systemDefault())));
 		
-		predicates.add(
-				builder.greaterThanOrEqualTo(root.get("dataAbertura"), 				
-								getInicioDia(LocalDateTime.now(ZoneId.systemDefault()))));
+		predicates.add(dataAberturaPredicate);
 
 		criteria.where(predicates.toArray(new Predicate[0]));
 
