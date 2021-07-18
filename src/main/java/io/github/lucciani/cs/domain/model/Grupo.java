@@ -1,6 +1,5 @@
 package io.github.lucciani.cs.domain.model;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-public class Usuario {
+public class Grupo {
 	
 	@EqualsAndHashCode.Include
 	@Id
@@ -29,25 +26,12 @@ public class Usuario {
 	private Long id;
 	
 	@Column(nullable = false)
-	private String usuario;
-	
-//	@Column(nullable = false)
-//	private String senha;
-	
-	@Column(nullable = false)
 	private String nome;
 	
-	@Column(nullable = false)
-	private String email;
-	
-	@CreationTimestamp
-	@Column(name = "data_cadastro", nullable = false)
-	private LocalDateTime dataCadastro;
-	
 	@ManyToMany
-	@JoinTable(name = "usuario_grupo",
-			joinColumns = @JoinColumn(name = "usuario_id"),
-			inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-	private List<Grupo> grupos = new ArrayList<>();
+	@JoinTable(name = "grupo_permissao",
+			joinColumns = @JoinColumn(name = "grupo_id"),
+			inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+	private List<Permissao> permissoes = new ArrayList<>();
 
 }
