@@ -51,6 +51,14 @@ public class Ticket {
 	@UpdateTimestamp
 	@Column(name = "data_atualizacao", nullable = false)
 	private LocalDateTime dataAtualizacao;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_solicitante_id", nullable = false)
+	private Usuario solicitante;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_solicitado_id", nullable = false)
+	private Usuario solicitado;
 
 
 }
